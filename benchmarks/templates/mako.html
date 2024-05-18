@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>${title}</title>
+    </head>
+    <body>
+        <main>
+            <section>
+                <h1>${header}</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Admin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        %for user in users:
+                            <tr>
+                                <td>${user.name}</td>
+                                <td>${user.email}</td>
+                                <td>
+                                    % if user.is_admin:
+                                    +
+                                    % else:
+                                    -
+                                    % endif
+                                </td>
+                            </tr>
+                        %endfor
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </body>
+</html>

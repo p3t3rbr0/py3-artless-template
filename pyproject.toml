@@ -1,0 +1,92 @@
+[build-system]
+requires = ["setuptools==70.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+# packages = ["."]
+py-modules = ["artless_template"]
+
+[tool.setuptools.dynamic]
+version = {attr = "artless_template.__version__"}
+
+[tool.setuptools.package-data]
+blank_project = ["py.typed"]
+
+[project]
+name = "artless-template"
+dynamic = ["version"]
+authors = [
+  {name = "Peter Bro", email = "p3t3rbr0@gmail.com"},
+]
+description = "Artless, small and simple template library for server-side rendering."
+keywords = ["artless", "template library", "template engine", "utility"]
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed"
+]
+
+[project.urls]
+Homepage = "https://github.com/p3t3rbr0/py3-artless-template"
+Documentation = "https://github.com/p3t3rbr0/py3-artless-template/blob/master/README.md"
+Repository = "https://github.com/p3t3rbr0/py3-artless-template.git"
+Issues = "https://github.com/p3t3rbr0/py3-artless-template/issues"
+Changelog = "https://github.com/p3t3rbr0/py3-artless-template/blob/master/CHANGELOG.md"
+
+[project.optional-dependencies]
+build = ["build==1.2.1", "twine==5.0.0"]
+dev = [
+    "coverage==7.5.1",
+    "mypy==1.10.0",
+    "isort==5.13.2",
+    "flake8==7.0.0",
+    "black==24.4.2",
+    "pydocstyle==6.3.0",
+]
+benchmarks = ["Django==5.0.6", "Jinja2==3.1.4", "Mako==1.3.5"]
+
+[tool.hatch.build.targets.wheel]
+include = ["*.py"]
+exclude = ["venv", "tests", ".*", "coverage*"]
+
+[tool.hatch.build.targets.sdist]
+ignore-vcs = true
+exclude = ["venv", ".*", "coverage*"]
+
+[tool.mypy]
+exclude = ["tests"]
+ignore_missing_imports = true
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+
+[tool.pydocstyle]
+inherit = false
+convention = "google"
+match-dir = "^(?!tests|.docs).+$"
+
+[tool.coverage.report]
+exclude_lines = [
+    "pass",
+    "\\.\\.\\.",
+    "def __getattr__",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["artless_template"]
+
+[tool.coverage.html]
+directory = "coverage_report"
