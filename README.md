@@ -1,5 +1,11 @@
 # artless-template
 
+![Build Status](https://github.com/p3t3rbr0/py3-artless-template/actions/workflows/ci.yaml/badge.svg?branch=master)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/artless-template)
+![PyPI Version](https://img.shields.io/pypi/v/artless-template)
+[![Code Coverage](https://codecov.io/gh/p3t3rbr0/py3-artless-template/graph/badge.svg?token=S9JIKQL126)](https://codecov.io/gh/p3t3rbr0/py3-artless-template)
+[![Maintainability](https://api.codeclimate.com/v1/badges/1002f19a39551c8fbb42/maintainability)](https://codeclimate.com/github/p3t3rbr0/py3-artless-template/maintainability)
+
 Artless and small template library for server-side rendering.
 
 Artless-template allows to generate HTML, using template files or/and natively Python objects. The library encourages approaches like HTMX and No-JS.
