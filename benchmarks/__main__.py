@@ -88,7 +88,7 @@ def test_artless_template():
         "users": users_markup,
     }
 
-    return read_template(TEMPLATES_DIR / "artless.html").render(context)
+    return read_template(TEMPLATES_DIR / "artless.html").render(**context)
 
 
 @deltatime
