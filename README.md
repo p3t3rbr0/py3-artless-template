@@ -64,12 +64,12 @@ Create `templates/index.html` with contents:
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>$(title)</title>
+    <title>@title</title>
   </head>
   <body>
     <main>
         <section>
-            <h1>$(header)</h1>
+            <h1>@header</h1>
             <table>
                 <thead>
                     <tr>
@@ -78,7 +78,7 @@ Create `templates/index.html` with contents:
                         <th>Admin</th>
                     </tr>
                 </thead>
-                $(users)
+                @users
             </table>
         </section>
     </main>
@@ -136,7 +136,7 @@ context = {
     "users": users_markup,
 }
 
-template = read_template(TEMPLATES_DIR / "index.html").render(context)
+template = read_template(TEMPLATES_DIR / "index.html").render(**context)
 ```
 
 <a id="usage-components"></a>
@@ -148,7 +148,7 @@ template = read_template(TEMPLATES_DIR / "index.html").render(context)
   ...
   <body>
     <main>
-      $(main)
+      @main
     </main>
   </body>
 </html>
