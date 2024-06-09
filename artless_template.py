@@ -1,7 +1,7 @@
 """Artless, small and simple template library for server-side rendering."""
 
 __author__ = "Peter Bro"
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __license__ = "MIT"
 __all__ = ["Component", "Template", "Tag", "read_template"]
 
