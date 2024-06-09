@@ -230,12 +230,12 @@ $ python -m bemchmarks
 Sorted results on i5 laptop (smaller is better):
 
 ``` python
-{'mako': 0.011, 'jinja': 0.035, 'artless': 0.048, 'dtl': 0.158}
+{'mako': 0.009, 'jinja': 0.029, 'artless': 0.048, 'dtl': 0.157}
 ```
 
-1. [Mako](https://www.makotemplates.org/) (0.011 sec.)
-2. [Jinja2](https://jinja.palletsprojects.com/en/3.1.x/) (0.035 sec.)
+1. [Mako](https://www.makotemplates.org/) (0.009 sec.)
+2. [Jinja2](https://jinja.palletsprojects.com/en/3.1.x/) (0.029 sec.)
 3. **Artless-template (0.048 sec.)**
-4. [Django templates](https://docs.djangoproject.com/en/5.0/ref/templates/) (0.158 sec.)
+4. [Django templates](https://docs.djangoproject.com/en/5.0/ref/templates/) (0.157 sec.)
 
 The performance of `artless-template` is better than the `Django template engine`, but worse than `Jinja2` and `Mako`.
