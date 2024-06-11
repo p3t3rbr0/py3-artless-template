@@ -3,6 +3,7 @@
 ## v0.2.0 - [2024-06-00]
 * Rewrite substitution logic from string replace to re.sub.
 * Add Template.DELIMITER classvar.
+* Add `benchmarks` make-command.
 * Actualize benchmarks and tests.
 * Update README.
 
