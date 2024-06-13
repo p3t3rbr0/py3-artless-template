@@ -1,15 +1,21 @@
 """Artless, small and simple template library for server-side rendering."""
 
 __author__ = "Peter Bro"
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __license__ = "MIT"
 __all__ = ["Component", "Template", "Tag", "read_template"]
 
-
-from datetime import datetime
 from functools import lru_cache
 from pathlib import Path
-from typing import Mapping, Optional, Protocol, Sequence, runtime_checkable
+from re import compile, escape
+from typing import (
+    ClassVar,
+    Mapping,
+    Optional,
+    Protocol,
+    Sequence,
+    runtime_checkable,
+)
 
 # Void tags (https://developer.mozilla.org/en-US/docs/Glossary/Void_element),
 # without closing scope.
@@ -131,9 +137,6 @@ class Component(Protocol):
         pass
 
 
-ContextT = Mapping[str, str | int | float | bool | None | datetime | Tag | Component]
-
-
 class Template:
     """String based template.
 
@@ -141,6 +144,7 @@ class Template:
     """
 
     __slots__ = ("template", "__weakref__")
+    DELIMITER: ClassVar[str] = "@"
 
     def __init__(self, template: str) -> None:
         """Initialize a Template object.
@@ -150,7 +154,7 @@ class Template:
         """
         self.template = template
 
-    def render(self, context: ContextT) -> str:
+    def render(self, **context) -> str:
         """Render the template by substituting context data.
 
         Args:
@@ -162,12 +166,17 @@ class Template:
         if not context:
             return self.template
 
-        for key, value in context.items():
-            replacement = f"$({key})"
-            value = str(value.view()) if isinstance(value, Component) else str(value)
-            self.template = self.template.replace(replacement, value)
+        context = {
+            f"{self.DELIMITER}{key}": (
+                str(value.view()) if isinstance(value, Component) else str(value)
+            )
+            for key, value in context.items()
+        }
+        context_sorted = sorted(context, key=len, reverse=True)
+        context_escaped = map(escape, context_sorted)
+        replacement_rx = compile("|".join(context_escaped))
 
-        return self.template
+        return replacement_rx.sub(lambda match: context[match.group(0)], self.template)
 
 
 @lru_cache()

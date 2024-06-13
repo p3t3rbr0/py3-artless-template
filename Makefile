@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: deps-dev deps-build deps-benchmarks deps build-sdist build-wheel build upload format lint tests cleanup help
+.PHONY: deps-dev deps-build deps-benchmarks deps build-sdist build-wheel build upload format lint tests cleanup help benchmarks
 
 PKG        = artless_template.py
 MAKEFLAGS += --silent
@@ -60,6 +60,9 @@ tests-cov-html:
 tests-cov-json:
 	python -m coverage run -m unittest && python -m coverage json
 
+benchmarks:
+	python -m benchmarks
+
 cleanup:
 	rm -rf .mypy_cache/ junit/ build/ dist/ coverage_report/
 	find . -not -path 'venv*' -path '*/__pycache__*' -delete
@@ -84,6 +87,7 @@ help:
 	echo "tests\t\tRun tests with coverage measure (output to terminal)."
 	echo "tests-cov-json\tRun tests with coverage measure (output to json [coverage.json])."
 	echo "tests-cov-html\tRun tests with coverage measure (output to html [coverage_report/])."
+	echo "benchmarks\t\tRun benchmark tests."
 	echo
 	echo "cleanup\t\tClean up Python temporary files and caches."
 	echo "format\t\tFromat the code (by black and isort)."

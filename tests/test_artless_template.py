@@ -33,7 +33,7 @@ class TestConstants(TestCase):
 class TestTemplate(TestCase):
     def setUp(self):
         self.content = (
-            "<html><head><title>$(title)</title></head><body><h1>$(header)</h1></body></html>"
+            "<html><head><title>@title</title></head><body><h1>@header</h1></body></html>"
         )
         self.template = Template(self.content)
 
@@ -47,28 +47,21 @@ class TestTemplate(TestCase):
             "<html><head><title>Test title</title></head><body><h1>Test</h1></body></html>"
         )
 
-        result = self.template.render(context)
+        result = self.template.render(**context)
 
         self.assertEqual(result, expected_result)
 
-    def test_render_with_empty_context(self):
-        result = self.template.render({})
+    def test_render_without_empty_context(self):
+        result = self.template.render()
         self.assertEqual(result, self.content)
-
-    def test_render_without_context(self):
-        with self.assertRaises(TypeError) as exc:
-            self.template.render()
-
-        expected_message = "Template.render() missing 1 required positional argument: 'context'"
-        self.assertEqual(str(exc.exception), expected_message)
 
     def test_render_context_with_component(self):
         class SomeComponent(Component):
             def view(self):
                 return Tag("div", None, "Div text")
 
-        template = Template("<html><head><title></title></head><body>$(body)</body></html>")
-        result = template.render({"body": SomeComponent()})
+        template = Template("<html><head><title></title></head><body>@body</body></html>")
+        result = template.render(body=SomeComponent())
 
         self.assertEqual(
             result, "<html><head><title></title></head><body><div>Div text</div></body></html>"
@@ -78,7 +71,7 @@ class TestTemplate(TestCase):
 class TestReadTemplate(TestCase):
     def setUp(self):
         self.file_content = (
-            "<html><head><title>$(title)</title></head><body><h1>$(header)</h1></body></html>"
+            "<html><head><title>@title</title></head><body><h1>@header</h1></body></html>"
         )
         self.fake_open = mock_open(read_data=self.file_content)
 
