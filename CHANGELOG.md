@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.2.0 - [2024-06-00]
+## v0.2.0 - [2024-06-13]
 * Rewrite substitution logic from string replace to re.sub.
 * Add Template.DELIMITER classvar.
 * Add `benchmarks` make-command.
