@@ -15,7 +15,7 @@ jobs:
             USING_COVERAGE: "3.12"
         steps:
             - name: Checkout sources
-              uses: actions/checkout@v4.1.5
+              uses: actions/checkout@v4.1.7
             - name: Set up Python
               uses: actions/setup-python@v5.1.0
               with:
@@ -41,7 +41,7 @@ jobs:
             - name: Run tests
               run: make tests-cov-json
             - name: Upload coverage to Codecov
-              uses: codecov/codecov-action@v4.3.1
+              uses: codecov/codecov-action@v4.4.1
               with:
                 token: ${{ secrets.CODECOV_TOKEN }}
                 file: ./coverage.json
