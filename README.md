@@ -20,6 +20,7 @@ Artless-template allows to generate HTML, using template files or/and natively P
   * [Template and tags usage](#usage-tags)
   * [Template and components usage](#usage-components)
 * [Performance](#performance)
+* [Rodmap](#roadmap)
 
 <a id="install"></a>
 ## Install
@@ -239,3 +240,11 @@ Sorted results on i5 laptop (smaller is better):
 4. [Django templates](https://docs.djangoproject.com/en/5.0/ref/templates/) (0.157 sec.)
 
 The performance of `artless-template` is better than the `Django template engine`, but worse than `Jinja2` and `Mako`.
+
+<a id="roadmap"></a>
+## Roadmap
+
+- [ ] Simplify the Tag constructor.
+- [ ] Cythonize the module code.
+- [ ] Create async version of `read_template()`.
+- [ ] Write detailed documentation with Sphinx.
