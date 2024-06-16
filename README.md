@@ -20,6 +20,7 @@ Artless-template allows to generate HTML, using template files or/and natively P
   * [Template and tags usage](#usage-tags)
   * [Template and components usage](#usage-components)
 * [Performance](#performance)
+* [Rodmap](#roadmap)
 
 <a id="install"></a>
 ## Install
@@ -40,15 +41,20 @@ div = t("div")
 print(div)
 <div></div>
 
-div = t("div", {"class": "some-class"}, "Some text")
+div = t("div", attrs={"class": "some-class"}, text="Some text")
 print(div)
 <div class="some-class">Some text</div>
 
-div = t("div", {"class": "some-class"}, "Div text", [t(span, None, "Span 1 text"), t(span, None, "Span 2 text")])
+div = t(
+    "div",
+    attrs={"class": "some-class"},
+    text="Div text",
+    children=[t(span, text="Span 1 text"), t(span, text="Span 2 text")]
+)
 print(div)
 <div class="some-class"><span>Span 1 text</span><span>Span 2 text</span>Div text</div>
 
-button = t("button", {"onclick": "function() {alert('hello');}"}, "Say Hello")
+button = t("button", attrs={"onclick": "function() {alert('hello');}"}, text="Say Hello")
 print(button)
 <button onclick="function() {alert('hello');}">Say Hello</button>
 ```
@@ -113,17 +119,13 @@ users = [
 
 users_markup = t(
     "tbody",
-    None,
-    None,
-    [
+    children=[
         t(
             "tr",
-            None,
-            None,
-            [
-                t("td", None, user.name),
-                t("td", None, user.email),
-                t("td", None, "+" if user.is_admin else "-"),
+            children=[
+                t("td", text=user.name),
+                t("td", text=user.email),
+                t("td", text="+" if user.is_admin else "-"),
             ],
         )
         for user in users
@@ -171,39 +173,29 @@ class UsersTableComponent:
     def view(self):
         return t(
             "table",
-            None,
-            None,
-            [
+            children=[
                 t(
                     "thead",
-                    None,
-                    None,
-                    [
+                    children=[
                         t(
                             "tr",
-                            None,
-                            None,
-                            [
-                                t("th", None, "Name"),
-                                t("th", None, "Email"),
-                                t("th", None, "Admin"),
+                            children=[
+                                t("th", text="Name"),
+                                t("th", text="Email"),
+                                t("th", text="Admin"),
                             ]
                         )
                     ]
                 ),
                 t(
                     "tbody",
-                    None,
-                    None,
-                    [
+                    children=[
                         t(
                             "tr",
-                            None,
-                            None,
-                            [
-                                t("td", None, user.name),
-                                t("td", None, user.email),
-                                t("td", None, "+" if user.is_admin else "-"),
+                            children=[
+                                t("td", text=user.name),
+                                t("td", text=user.email),
+                                t("td", text="+" if user.is_admin else "-"),
                             ],
                         )
                         for user in self.users
@@ -239,3 +231,11 @@ Sorted results on i5 laptop (smaller is better):
 4. [Django templates](https://docs.djangoproject.com/en/5.0/ref/templates/) (0.157 sec.)
 
 The performance of `artless-template` is better than the `Django template engine`, but worse than `Jinja2` and `Mako`.
+
+<a id="roadmap"></a>
+## Roadmap
+
+- [x] Simplify the Tag constructor.
+- [ ] Cythonize the module code.
+- [ ] Create async version of `read_template()`.
+- [ ] Write detailed documentation with Sphinx.

@@ -58,7 +58,7 @@ class TestTemplate(TestCase):
     def test_render_context_with_component(self):
         class SomeComponent(Component):
             def view(self):
-                return Tag("div", None, "Div text")
+                return Tag("div", text="Div text")
 
         template = Template("<html><head><title></title></head><body>@body</body></html>")
         result = template.render(body=SomeComponent())
@@ -89,62 +89,76 @@ class TestTag(TestCase):
     def setUp(self):
         self.test_cases = [
             # Only tag name
-            (["div", None, None], "<div></div>"),
+            ("div", {}, "<div></div>"),
             # Only name and attributes
-            (["div", {"id": "superblock"}, None], '<div id="superblock"></div>'),
+            ("div", {"attrs": {"id": "superblock"}}, '<div id="superblock"></div>'),
             # Only name and text
-            (["div", None, "Test"], "<div>Test</div>"),
+            ("div", {"text": "Test"}, "<div>Test</div>"),
             # Name, attributes and text
-            (["div", {"id": "superblock"}, "Test"], '<div id="superblock">Test</div>'),
+            (
+                "div",
+                {"attrs": {"id": "superblock"}, "text": "Test"},
+                '<div id="superblock">Test</div>',
+            ),
             # Name, more attributes and text
             (
-                [
-                    "div",
-                    {"id": "some-id", "class": "some-class", "data-field": "some data field"},
-                    "Some text",
-                ],
+                "div",
+                {
+                    "attrs": {
+                        "id": "some-id",
+                        "class": "some-class",
+                        "data-field": "some data field",
+                    },
+                    "text": "Some text",
+                },
                 '<div id="some-id" class="some-class" data-field="some data field">Some text</div>',
             ),
             # Name, attributes, text and children
             (
-                [
-                    "div",
-                    {"class": "parent"},
-                    "Parent text",
-                    [
+                "div",
+                {
+                    "attrs": {"class": "parent"},
+                    "text": "Parent text",
+                    "children": [
                         Tag(
                             "div",
-                            {"class": "child"},
-                            "Child text",
-                            [Tag("span", None, "Span text")],
+                            attrs={"class": "child"},
+                            text="Child text",
+                            children=[Tag("span", text="Span text")],
                         )
                     ],
-                ],
+                },
                 (
                     '<div class="parent"><div class="child"><span>Span text</span>'
                     "Child text</div>Parent text</div>"
                 ),
             ),
             # Void tag
-            (["br"], "<br />"),
+            ("br", {}, "<br />"),
             # Void tag with attributes
             (
-                ["area", {"data-url": "https://www.w3.org/"}],
+                "area",
+                {"attrs": {"data-url": "https://www.w3.org/"}},
                 '<area data-url="https://www.w3.org/" />',
             ),
             # Void tag with text
-            (["area", None, "Text that will not be shown"], "<area />"),
+            ("area", {"text": "Text that will not be shown"}, "<area />"),
             # Void tag with children
-            (["area", None, None, [Tag("span")]], "<area />"),
+            ("area", {"children": [Tag("span")]}, "<area />"),
         ]
 
     def test_render_tags(self):
-        for args, expected in self.test_cases:
-            with self.subTest(args=args, expected=expected):
-                self.assertEqual(str(Tag(*args)), expected)
+        for name, kwargs, expected in self.test_cases:
+            with self.subTest(name=name, kwargs=kwargs, expected=expected):
+                self.assertEqual(str(Tag(name, **kwargs)), expected)
 
     def test_repr(self):
-        tag = Tag("div", {"id": "superblock"}, "Div text", [Tag("span", None, "Span text")])
+        tag = Tag(
+            "div",
+            attrs={"id": "superblock"},
+            text="Div text",
+            children=[Tag("span", text="Span text")],
+        )
         self.assertEqual(
             tag.__repr__(),
             (

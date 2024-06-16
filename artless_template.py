@@ -1,7 +1,7 @@
 """Artless, small and simple template library for server-side rendering."""
 
 __author__ = "Peter Bro"
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __license__ = "MIT"
 __all__ = ["Component", "Template", "Tag", "read_template"]
 
@@ -45,8 +45,9 @@ class Tag:
         self,
         name: str,
         /,
+        *,
         attrs: Optional[Mapping[str, str]] = None,
-        text: str = "",
+        text: Optional[str] = None,
         children: Optional[Sequence["Tag"]] = None,
     ) -> None:
         """Initialize a Tag object.
@@ -59,7 +60,7 @@ class Tag:
         """
         self.name = name.lower()
         self.attrs = attrs
-        self.text: str = text
+        self.text = text
         self.children = []
 
         self.parent: Optional["Tag"] = None
