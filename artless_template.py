@@ -45,8 +45,9 @@ class Tag:
         self,
         name: str,
         /,
+        *,
         attrs: Optional[Mapping[str, str]] = None,
-        text: str = "",
+        text: Optional[str] = None,
         children: Optional[Sequence["Tag"]] = None,
     ) -> None:
         """Initialize a Tag object.
@@ -59,7 +60,7 @@ class Tag:
         """
         self.name = name.lower()
         self.attrs = attrs
-        self.text: str = text
+        self.text = text
         self.children = []
 
         self.parent: Optional["Tag"] = None

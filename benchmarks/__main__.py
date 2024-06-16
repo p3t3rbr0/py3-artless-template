@@ -66,17 +66,13 @@ users = [
 def test_artless_template():
     users_markup = t(
         "tbody",
-        None,
-        None,
-        [
+        children=[
             t(
                 "tr",
-                None,
-                None,
-                [
-                    t("td", None, user.name),
-                    t("td", None, user.email),
-                    t("td", None, "+" if user.is_admin else "-"),
+                children=[
+                    t("td", text=user.name),
+                    t("td", text=user.email),
+                    t("td", text="+" if user.is_admin else "-"),
                 ],
             )
             for user in users
