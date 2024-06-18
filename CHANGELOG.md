@@ -1,6 +1,9 @@
 # Changelog
 
-## v0.3.0 - [2024-07-16]
+## v0.4.0 - [2024-07-00]
+...
+
+## v0.3.0 - [2024-06-16]
 * Simplify the Tag constructor.
 * Update versions of ci-actions.
 * Add Roadmap section into README.
